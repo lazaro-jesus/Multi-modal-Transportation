@@ -2,4 +2,57 @@
 {% load static %}
 
 {% block content %}
+<main id="main">
+    <!-- ======= Breadcrumbs ======= -->
+    <div class="breadcrumbs">
+      <div class="page-header d-flex align-items-center" style="background-image: url('../static/img/quote-bg.jpg');">
+        <div class="container position-relative">
+          <div class="row d-flex justify-content-center">
+            <div class="col-lg-6 text-center">
+              <h2>Listado de Rutas</h2>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div><!-- End Breadcrumbs -->
+
+    <!-- ======= Route Listing Section ======= -->
+    <section id="route-listing" class="route-listing">
+      <div class="container" data-aos="fade-up">
+        <div class="row gy-4">
+          {% for route in routes %}
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+              <div class="route-item">
+                
+                  <h3>Origen:</h3>
+                  <h6> {{ route.source }} </h6> 
+                  <h3>Destino:</h3> 
+                  <h6>{{ route.destination }}</h6> 
+                  <h4>
+                    <sup></sup><h3>Precio: ${{ route.fixed_freight_cost }}</h3> <br>
+                    <span><h3>Tipo de transporte:</h3> <h6>{{ route.get_travel_mode_display }}</h6></span>
+                  </h4>
+                </div>
+                <div class="p-3">
+                  <ul class="list-unstyled">
+                    <li>
+                      <i class="bi bi-truck"></i> Transportista: {{ route.carrier }}
+                    </li>
+                    <li>
+                      <i class="bi bi-calendar2-check"></i> Tiempo de Tránsito: {{ route.transit_time }} horas
+                    </li>
+                    <!-- Add more details as needed -->
+                  </ul>
+                  <div class="btn-group">
+                    <a href="{% url 'core:route-update' route.id %}" class="btn btn-outline-primary m-1">Editar</a>
+                    <a href="{% url 'core:route-delete' route.id %}" class="btn btn-outline-danger m-1">Eliminar</a>
+                  </div>
+                
+              </div>
+            </div><!-- End Pricing Item -->
+          {% endfor %}
+        </div>
+      </div>
+    </section><!-- End Route Listing Section -->
+  </main><!-- End #main -->
 {% endblock content %}
