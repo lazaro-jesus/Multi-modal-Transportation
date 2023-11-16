@@ -1,6 +1,7 @@
 import pandas as pd
 
 from django.db import models
+from django.db.models import Q
 from django.utils.functional import cached_property
 from django.core.exceptions import ValidationError
 
@@ -60,13 +61,26 @@ class Order(models.Model):
         m.solve_model()
         
         try:
-            t = m.solution_txt(order)
-            print(t)
-            return t
+            solution = m.solution_text(order)
+            optimized, _ = OrderOptimized.objects.get_or_create(order=self, routes=solution)
+            return optimized
         except NotSolvable as error:
             return error.args[0]
         
         
 class OrderOptimized(models.Model):
-    order = models.ForeignKey(Order, on_delete=models.CASCADE, verbose_name="Órden", related_name="optimizeds")
-    
+    order = models.ForeignKey(Order, on_delete=models.CASCADE, verbose_name="Órden", related_name="optimized")
+    routes = models.TextField(verbose_name="Rutas Optimizadas")
+
+    @cached_property
+    def to_text(self):
+        solutions = self.routes.split(";")
+        
+        for i in range(0, len(solutions), 4):
+            route = Route.objects.filter(
+                Q(source__province=solutions[i+2]) & Q(destination__province=solutions[i+3])
+            ).first()
+            
+        print(route)
+        
+        return ""

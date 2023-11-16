@@ -43,3 +43,15 @@ class RouteManager(models.Manager):
         )
 
         return routes
+
+    def get_route_by_name(self, source, destination):
+        try:
+            ruta = self.get(
+                source__province=source.split()[0],
+                source__port_type=source.split()[1],
+                destination__province=destination.split()[0],
+                destination__port_type=destination.split()[1]
+            )
+            return ruta
+        except Exception:
+            return None

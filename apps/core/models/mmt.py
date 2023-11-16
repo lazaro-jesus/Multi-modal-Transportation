@@ -193,26 +193,15 @@ class MMT:
 
         return 0, arrTime, stayTime
  
-    def solution_txt(self, order: pd.DataFrame) -> str:
+    def solution_text(self, order: pd.DataFrame) -> str:
         """Transform the cached results"""
         if self.arrTime_['goods-1'] == "NaT":
             raise NotSolvable()
-            
-        txt = ""
-        txt += "\nMercancia: " + order["Commodity"][0]
-        txt += (
-            "\nFecha inicio: "
-            + pd.to_datetime(order["Order Date"]).iloc[0].date().isoformat()
-        )
-        txt += f"\nFecha fin: {self.arrTime_['goods-1']}"
-        txt += "\nRutas:"
-        solution = self.solution_["goods-1"]
         
-        route_txt = ""
+        solution = self.solution_["goods-1"]
+        routes = ""
         
         for i, s in enumerate(solution):
-            route_txt += f"\n({i+1})Fecha: {s[2]}  Desde: {s[0]}  Hacia: {s[1]}"
+            routes += f"{i+1};{s[2]};{s[0]};{s[1]}"
             
-        txt += route_txt
-
-        return txt
+        return routes

@@ -91,7 +91,22 @@
                 </ul>
                 <a href="{% url 'core:order-update' order.id %}" class="btn btn-outline-warning m-1">Editar</a>
                 <a href="{% url 'core:order-delete' order.id %}" class="btn btn-outline-danger m-1">Eliminar</a>
-                <a href="{% url 'core:order-optimize' order.id %}" class="btn btn-outline-success m-1">Optimizar Ruta</a>
+                <a href="{% url 'core:order-optimize' order.id %}" class="btn btn-outline-success btn-optimized m-1">Optimizar Ruta</a>
+                
+                {% if order.optimized %}
+                <!-- Rutas optimizadas -->
+                <div class="">
+                  <!-- Contenido del cuadro adicional -->
+                  <h5 class="mt-3">Rutas óptimas</h5>
+                  <ul>
+                    {% comment %} {% for  in  %} {% endcomment %}
+                    <li>
+                      <i class="bi bi-arrow-right"></i> Rutas: {{ order.optimized.routes }}
+                    </li>
+                    {% comment %} {% endfor %} {% endcomment %}
+                  </ul>
+              </div>
+              {% endif %}
               </div>
             </div>
             <!-- End Pricing Item -->
@@ -103,3 +118,7 @@
   </main>
   <!-- End #main -->
 {% endblock %}
+
+{% block javascript %}
+<script src="{% static 'js/order.js' %}"></script>
+{% endblock javascript %}

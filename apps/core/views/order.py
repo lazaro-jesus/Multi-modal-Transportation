@@ -1,5 +1,5 @@
 from django.views.generic import CreateView, ListView, UpdateView, View
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.urls import reverse_lazy
 
 from ..models import Order
@@ -54,4 +54,8 @@ class OrderOptimizeView(View):
     def get(self, request, *args, **kwargs):
         order = Order.objects.get(pk=kwargs['pk'])
         order.optimize_route()
-        return redirect(reverse_lazy('core:order-list'))
+        context = {
+            "orders": Order.objects.all()
+        }
+        
+        return render(request, "orders/list.html", context=context)
