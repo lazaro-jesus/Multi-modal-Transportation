@@ -69,16 +69,18 @@ class Order(models.Model):
                 optimized.save()
                 
         except NotSolvable as error:
-            optimized, created = OrderOptimized.objects.get_or_create(order=self, routes=error.args[0])
+            optimized, created = OrderOptimized.objects.get_or_create(order=self, routes=error.args[0], solved=False)
             
             if not created:
                 optimized.routes = error.args[0]
+                optimized.solved = False
                 optimized.save()
   
         
 class OrderOptimized(models.Model):
     order = models.OneToOneField(Order, on_delete=models.CASCADE, verbose_name="Órden", related_name="optimized")
     routes = models.TextField(verbose_name="Rutas Optimizadas")
+    solved = models.BooleanField(default=True, verbose_name="Solucionado")
 
     def __str__(self) -> str:
         return f"{self.order.commodity} - {self.order.ship_from} to {self.order.ship_to}"
@@ -91,10 +93,6 @@ class OrderOptimized(models.Model):
             "SE": "bi bi-water"
         }
         solutions = self.routes.split(";")
-        
-        if len(solutions) == 0:
-            return ""
-        
         locations = Location.objects.all()
         routes = []
 
