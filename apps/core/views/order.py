@@ -38,6 +38,7 @@ class OrderListView(ListView):
     
 
 class OrderUpdateView(UpdateView):
+    template_name = 'generic/update.html'
     model = Order
     form_class = OrderForm
     success_url = reverse_lazy('core:order-list')

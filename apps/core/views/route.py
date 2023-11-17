@@ -38,6 +38,7 @@ class RouteListView(ListView):
     
     
 class RouteUpdateView(UpdateView):
+    template_name = 'generic/update.html'
     model = Route
     form_class = RouteForm
     success_url = reverse_lazy('core:route-list')

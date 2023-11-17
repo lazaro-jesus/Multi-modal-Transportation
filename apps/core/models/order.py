@@ -52,7 +52,7 @@ class Order(models.Model):
             "Tax Percentage": [self.tax_percentage]
         })
     
-    def optimize_route(self) -> str:
+    def optimize_route(self) -> None:
         order = self.to_dataframe
         routes = Route.objects.routes_dataframe()
         m = CVXPY()
@@ -62,11 +62,19 @@ class Order(models.Model):
         
         try:
             solution = m.solution_text(order)
-            optimized, _ = OrderOptimized.objects.get_or_create(order=self, routes=solution)
-            return optimized
+            optimized, created = OrderOptimized.objects.get_or_create(order=self, routes=solution)
+            
+            if not created:
+                optimized.routes = solution
+                optimized.save()
+                
         except NotSolvable as error:
-            return error.args[0]
-        
+            optimized, created = OrderOptimized.objects.get_or_create(order=self, routes=error.args[0])
+            
+            if not created:
+                optimized.routes = error.args[0]
+                optimized.save()
+  
         
 class OrderOptimized(models.Model):
     order = models.OneToOneField(Order, on_delete=models.CASCADE, verbose_name="Órden", related_name="optimized")
@@ -74,19 +82,6 @@ class OrderOptimized(models.Model):
 
     def __str__(self) -> str:
         return f"{self.order.commodity} - {self.order.ship_from} to {self.order.ship_to}"
-
-    @cached_property
-    def to_text(self):
-        solutions = self.routes.split(";")
-        
-        for i in range(0, len(solutions), 4):
-            route = Route.objects.filter(
-                Q(source__province=solutions[i+2]) & Q(destination__province=solutions[i+3])
-            ).first()
-            
-        print(route)
-        
-        return ""
     
     def to_list(self):
         icons = {
@@ -96,6 +91,10 @@ class OrderOptimized(models.Model):
             "SE": "bi bi-water"
         }
         solutions = self.routes.split(";")
+        
+        if len(solutions) == 0:
+            return ""
+        
         locations = Location.objects.all()
         routes = []
 
