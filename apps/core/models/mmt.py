@@ -189,7 +189,6 @@ class MMT:
         arrTimeMtrx[:, self.kEndPort.tolist(), :, range(self.goods)] = 0
         stayTime = np.sum(startTime, axis=(1, 2)) - np.sum(arrTimeMtrx, axis=(0, 2))
         stayTime[self.kStartPort.tolist(), range(self.goods)] -= self.kStartTime
-        # warehouseCost = np.sum(np.sum(stayTime * self.kVol, axis=1) * self.whCost)
 
         return 0, arrTime, stayTime
  
@@ -202,6 +201,6 @@ class MMT:
         routes = ""
         
         for i, s in enumerate(solution):
-            routes += f"{i+1};{s[2]};{s[0]};{s[1]}"
+            routes += f"{i+1};{s[2]};{s[0]};{s[1]};"
             
-        return routes
+        return routes[:-1]

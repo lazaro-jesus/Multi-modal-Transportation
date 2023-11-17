@@ -69,8 +69,11 @@ class Order(models.Model):
         
         
 class OrderOptimized(models.Model):
-    order = models.ForeignKey(Order, on_delete=models.CASCADE, verbose_name="Órden", related_name="optimized")
+    order = models.OneToOneField(Order, on_delete=models.CASCADE, verbose_name="Órden", related_name="optimized")
     routes = models.TextField(verbose_name="Rutas Optimizadas")
+
+    def __str__(self) -> str:
+        return f"{self.order.commodity} - {self.order.ship_from} to {self.order.ship_to}"
 
     @cached_property
     def to_text(self):
@@ -84,3 +87,31 @@ class OrderOptimized(models.Model):
         print(route)
         
         return ""
+    
+    def to_list(self):
+        icons = {
+            "AI": "bi bi-truck",
+            "RA": "bi bi-train-front-fill",
+            "TR": "bi bi-airplane-fill",
+            "SE": "bi bi-water"
+        }
+        solutions = self.routes.split(";")
+        locations = Location.objects.all()
+        routes = []
+
+        for i in range(0, len(solutions), 4):
+            source = [location for location in locations if location.to_calculate == solutions[i+2]][0]
+            destination = [location for location in locations if location.to_calculate == solutions[i+3]][0]
+            route = Route.objects.filter(Q(source__pk=source.pk) & Q(destination__pk=destination.pk)).first()
+            
+            routes.append(
+                {
+                    "id": solutions[i],
+                    "date": solutions[i],
+                    "origin": solutions[i],
+                    "destination": solutions[i],
+                    "icon": icons[route.travel_mode]
+                }
+            )
+
+        return routes

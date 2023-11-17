@@ -99,11 +99,17 @@
                   <!-- Contenido del cuadro adicional -->
                   <h5 class="mt-3">Rutas óptimas</h5>
                   <ul>
-                    {% comment %} {% for  in  %} {% endcomment %}
+                    {% for r in order.optimized.to_list %}
                     <li>
-                      <i class="bi bi-arrow-right"></i> Rutas: {{ order.optimized.routes }}
+                      <i class="bi bi-arrow-right"></i>{{r.id }}
+                      <i class="{{r.icon}}"></i>
                     </li>
-                    {% comment %} {% endfor %} {% endcomment %}
+                    {% comment %} (1)Date: 2018-02-01  From: Singapore Warehouse  To: Malaysia Warehouse  By: Truck
+(2)Date: 2018-02-02  From: Malaysia Warehouse  To: Malaysia Port  By: Truck
+(3)Date: 2018-02-03  From: Malaysia Port  To: Shanghai Port  By: Sea
+(4)Date: 2018-02-10  From: Shanghai Port  To: Shanghai Warehouse  By: Truck
+(5)Date: 2018-02-11  From: Shanghai Warehouse  To: Wuxi Warehouse  By: Truck {% endcomment %}
+                    {% endfor %}
                   </ul>
               </div>
               {% endif %}
