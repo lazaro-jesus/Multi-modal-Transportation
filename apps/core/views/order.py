@@ -66,7 +66,6 @@ class OrderDeleteView(View):
         order.delete()
         return redirect(reverse_lazy('core:order-list'))
     
-
 class OrderOptimizeView(View):
     def get(self, request, *args, **kwargs):
         order = Order.objects.get(pk=kwargs['pk'])

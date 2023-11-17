@@ -19,21 +19,20 @@
     <!-- ======= Route Listing Section ======= -->
     <section id="route-listing" class="route-listing">
       <div class="container" data-aos="fade-up">
-        <div class="row gy-4">
+        <div class="row gy-3">
           {% for route in routes %}
             <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
               <div class="route-item">
-                  <h3>Origen:</h3>
+                  <h5>Origen:</h5>
                   <h6> {{ route.source }} </h6> 
-                  <h3>Destino:</h3> 
+                  <h5>Destino:</h5> 
                   <h6>{{ route.destination }}</h6> 
                   <h4>
-                    <sup></sup><h3>Precio: ${{ route.fixed_freight_cost }}</h3> <br>
-                    <span><h3>Tipo de transporte:</h3> <h6>{{ route.get_travel_mode_display }}</h6></span>
+                    <sup></sup><h5>Precio: ${{ route.fixed_freight_cost }}</h5> <br>
+                    <span><h5>Tipo de transporte:</h5> <h6>{{ route.get_travel_mode_display }}</h6></span>
                   </h4>
-                </div>
-                <div class="p-3">
-                  <ul class="list-unstyled">
+                  <div class="py-3">
+                    <ul class="list-unstyled">
                     <li>
                       <i class="bi bi-truck"></i> Transportista: {{ route.carrier }}
                     </li>
@@ -43,10 +42,11 @@
                     <!-- Add more details as needed -->
                   </ul>
                   <div class="btn-group">
-                    <a href="{% url 'core:route-update' route.id %}" class="btn btn-outline-primary m-1">Editar</a>
+                    <a href="{% url 'core:route-update' route.id %}" class="btn btn-outline-warning m-1">Editar</a>
                     <a href="{% url 'core:route-delete' route.id %}" class="btn btn-outline-danger m-1">Eliminar</a>
                   </div>
-                
+                </div>
+                  
               </div>
             </div><!-- End Pricing Item -->
           {% endfor %}
