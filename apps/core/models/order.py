@@ -15,7 +15,7 @@ from .error import NotSolvable
 def validate_max_value(value) -> None:
    if value > 100:
        raise ValidationError(
-           "%(value)s es mayor que el valor máximo permitido 100",
+           "%(value)s es mayor que el valor máximo permitido (100)",
            params={"value": value},
        )
 
@@ -107,9 +107,9 @@ class OrderOptimized(models.Model):
             routes.append(
                 {
                     "id": solutions[i],
-                    "date": solutions[i],
-                    "origin": solutions[i],
-                    "destination": solutions[i],
+                    "date": solutions[i+1],
+                    "origin": solutions[i+2],
+                    "destination": solutions[i+3],
                     "icon": icons[route.travel_mode]
                 }
             )

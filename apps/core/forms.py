@@ -16,6 +16,12 @@ class OrderForm(forms.ModelForm):
             'required_delivery_date': forms.DateInput(attrs={'type': 'date', 'class': 'form-control', 'placeholder': 'Fecha de entrega requerida'}),
             'tax_percentage': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Porcentaje de impuesto'}),
         }
+        
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['ship_from'].empty_label = "Seleccione el origen"
+        self.fields['ship_to'].empty_label = "Seleccione el destino"
+
 
 class RouteForm(forms.ModelForm):
    class Meta:

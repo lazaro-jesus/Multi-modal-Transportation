@@ -16,6 +16,14 @@ class RouteCreateView(CreateView):
         context = super().get_context_data(**kwargs)
         context['model'] = self.model._meta.verbose_name
         return context
+    
+    def form_invalid(self, form):
+        response = super().form_invalid(form)
+        
+        for key in form.errors.keys():
+            form.fields[key].widget.attrs["class"] += " is-invalid"
+            
+        return response
 
    
 class RouteListView(ListView):
@@ -41,6 +49,14 @@ class RouteUpdateView(UpdateView):
         context = super().get_context_data(**kwargs)
         context['model'] = self.model._meta.verbose_name
         return context
+    
+    def form_invalid(self, form):
+        response = super().form_invalid(form)
+        
+        for key in form.errors.keys():
+            form.fields[key].widget.attrs["class"] += " is-invalid"
+            
+        return response
 
   
 class RouteDeleteView(View):
