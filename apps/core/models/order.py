@@ -62,15 +62,16 @@ class Order(models.Model):
         
         try:
             solution = m.solution_text(order)
-            optimized = OrderOptimized.objects.filter(order_pk=self.pk).first()
+            optimized = OrderOptimized.objects.filter(order__pk=self.pk).first()
             
             if optimized is not None:
                 optimized.routes = solution
+                optimized.solved = True
                 optimized.save()
             else:
                 OrderOptimized.objects.create(order=self, routes=solution)
         except NotSolvable as error:
-            optimized = OrderOptimized.objects.filter(order_pk=self.pk).first()
+            optimized = OrderOptimized.objects.filter(order__pk=self.pk).first()
             
             if optimized is not None:
                 optimized.routes = error.args[0]
