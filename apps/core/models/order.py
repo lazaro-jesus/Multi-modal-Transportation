@@ -56,10 +56,23 @@ class Order(models.Model):
         order = self.to_dataframe
         routes = Route.objects.routes_dataframe()
         m = CVXPY()
-        m.set_param(routes, order)
-        m.build_model()
-        m.solve_model()
-        
+        try:
+            m.set_param(routes, order)
+            m.build_model()
+            m.solve_model()
+        except Exception:
+            optimized = OrderOptimized.objects.filter(order__pk=self.pk).first()
+            
+            if optimized is not None:
+                optimized.routes = "El modelo no tiene solución, no se proporcionará ninguna solución"
+                optimized.solved = False
+                optimized.save()
+            else:
+                OrderOptimized.objects.create(
+                    order=self,
+                    routes="El modelo no tiene solución, no se proporcionará ninguna solución",
+                    solved=False
+                )
         try:
             solution = m.solution_text(order)
             optimized = OrderOptimized.objects.filter(order__pk=self.pk).first()
