@@ -83,7 +83,7 @@
                     <i class="bi bi-arrow-right"></i> Destino: {{ order.ship_to }}
                   </li>
                   <li>
-                    <i class="bi bi-arrow-right"></i> Volumen: {{ order.volume }}
+                    <i class="bi bi-arrow-right"></i> Volumen: {{ order.volume }} m³
                   </li>
                   <li>
                     <i class="bi bi-arrow-right"></i> Fecha: {{ order.date }}
@@ -99,19 +99,24 @@
                 <a href="{% url 'core:order-delete' order.id %}" class="btn btn-outline-danger m-1">Eliminar</a>
                 <a href="{% url 'core:order-optimize' order.id %}" class="btn btn-outline-success btn-optimized m-1">Optimizar Ruta</a>
                 
-                {% if order.optimized %}
-                <!-- Rutas optimizadas -->
-                <div class="optimized-routes-container">
-                  <h5 class="mt-3">Ruta óptima</h5>
-                  <ul>
-                    {% for r in order.optimized.to_list %}
-                    <li>
-                      <i class="{{ r.icon }}">  -{{r.id}}</i> Fecha: {{ r.date }} <br> Desde: {{ r.origin }} <br> Hasta: {{ r.destination }}
-                    </li>
-                    {% endfor %}
-                  </ul>
-                </div>{{r.id}}
-              {% endif %}
+                {% if order.optimized and order.optimized.solved %}
+                  <!-- Rutas optimizadas -->
+                  <div class="optimized-routes-container">
+                    <h5 class="mt-3">Ruta óptima</h5>
+                    <ul>
+                      {% for r in order.optimized.to_list %}
+                      <li>
+                        <i class="{{ r.icon }}">{{ r.id }}</i>  Fecha: {{ r.date }} <br> Desde: {{ r.origin }} <br> Hasta: {{ r.destination }}
+                      </li>
+                      {% endfor %}
+                    </ul>
+                  </div>
+                {% elif not order.optimized.solved %}
+                  <div class="alert alert-danger" role="alert">
+                    {{ order.optimized.routes }}
+                  </div>
+            {% endif %}
+            
               
               </div>
             </div>
