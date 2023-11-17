@@ -99,24 +99,22 @@
                 <a href="{% url 'core:order-delete' order.id %}" class="btn btn-outline-danger m-1">Eliminar</a>
                 <a href="{% url 'core:order-optimize' order.id %}" class="btn btn-outline-success btn-optimized m-1">Optimizar Ruta</a>
                 
-                {% if order.optimized %}
-                {% if order.solved %}
+                {% if order.optimized and order.optimized.solved %}
                   <!-- Rutas optimizadas -->
                   <div class="optimized-routes-container">
                     <h5 class="mt-3">Ruta óptima</h5>
                     <ul>
                       {% for r in order.optimized.to_list %}
                       <li>
-                        <i class="{{ r.icon }}"></i> - {{ r.id }} Fecha: {{ r.date }} <br> Desde: {{ r.origin }} <br> Hasta: {{ r.destination }}
+                        <i class="{{ r.icon }}">{{ r.id }}</i>  Fecha: {{ r.date }} <br> Desde: {{ r.origin }} <br> Hasta: {{ r.destination }}
                       </li>
                       {% endfor %}
                     </ul>
                   </div>
-                {% else %}
+                {% elif not order.optimized.solved %}
                   <div class="alert alert-danger" role="alert">
                     {{ order.optimized.routes }}
                   </div>
-                {% endif %}
             {% endif %}
             
               
