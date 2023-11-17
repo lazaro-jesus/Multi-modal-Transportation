@@ -1,3 +1,3 @@
 class NotSolvable(Exception):
     def __init__(self, *args: object) -> None:
-        super().__init__("El modelo no tiene solución, no se proporcionará ninguna solución", *args[1:])
+        super().__init__("El modelo no tiene solución.Revise el tiempo de tránsito, rutas y fecha de entrega.", *args[1:])

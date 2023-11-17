@@ -24,7 +24,7 @@ class Order(models.Model):
     ship_from = models.ForeignKey(Location, on_delete=models.CASCADE, verbose_name="Lugar de origen", related_name="orders_from")
     ship_to = models.ForeignKey(Location, on_delete=models.CASCADE, verbose_name="Lugar de destino", related_name="orders_to")
     commodity = models.CharField(max_length=255, verbose_name="Mercancía")
-    value = models.IntegerField(verbose_name="Valor")
+    value = models.IntegerField(verbose_name="Valor de la mercancía")
     volume = models.IntegerField(verbose_name="Volumen", default=0, validators=[validate_max_value])
     date = models.DateField(verbose_name="Fecha", auto_now_add=True)
     required_delivery_date = models.DateField(verbose_name="Fecha de entrega requerida")
@@ -64,13 +64,13 @@ class Order(models.Model):
             optimized = OrderOptimized.objects.filter(order__pk=self.pk).first()
             
             if optimized is not None:
-                optimized.routes = "El modelo no tiene solución, no se proporcionará ninguna solución"
+                optimized.routes = "El modelo no tiene solución.Revise el tiempo de tránsito, rutas y fecha de entrega."
                 optimized.solved = False
                 optimized.save()
             else:
                 OrderOptimized.objects.create(
                     order=self,
-                    routes="El modelo no tiene solución, no se proporcionará ninguna solución",
+                    routes="El modelo no tiene solución.Revise el tiempo de tránsito, rutas y fecha de entrega.",
                     solved=False
                 )
         try:

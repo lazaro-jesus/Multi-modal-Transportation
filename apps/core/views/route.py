@@ -2,7 +2,8 @@ from django.views.generic import CreateView, ListView, UpdateView, View
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 
-from ..models import Route
+from django.db.models import Q
+from ..models import Route, Location
 from ..forms import RouteForm
 
 
@@ -36,6 +37,24 @@ class RouteListView(ListView):
         context['model'] = self.model._meta.verbose_name_plural
         return context
     
+class RouteSearchView(ListView):
+    template_name = 'routes/list.html'
+    context_object_name = 'routes'
+    
+    def get_queryset(self):
+       query = self.request.GET.get('query')
+       
+       if query:
+           locations = Location.objects.filter(province__iexact=query)
+           return Route.objects.filter(Q(source__in=locations) | Q(destination__in=locations))
+       else:
+           return Route.objects.all()
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['model'] = f"Rutas"
+        context['result'] = self.request.GET.get('query')
+        return context
     
 class RouteUpdateView(UpdateView):
     template_name = 'generic/update.html'

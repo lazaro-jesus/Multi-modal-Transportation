@@ -12,7 +12,8 @@ from .views import (
     RouteCreateView,
     RouteListView,
     RouteUpdateView,
-    RouteDeleteView
+    RouteDeleteView,
+    RouteSearchView
 )
 
 
@@ -32,4 +33,5 @@ urlpatterns = [
     path("route-list/", RouteListView.as_view(), name="route-list"),
     path("route-update/<int:pk>/", RouteUpdateView.as_view(), name="route-update"),
     path("route-delete/<int:pk>/", RouteDeleteView.as_view(), name="route-delete"),
+    path("route-search/", RouteSearchView.as_view(), name="route-search"),
 ]
