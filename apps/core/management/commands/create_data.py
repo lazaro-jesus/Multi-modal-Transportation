@@ -57,8 +57,8 @@ class Command(BaseCommand):
                 wednesday=True,
                 thursday=True,
                 friday=True,
-                saturday=random.choice([True, False]),
-                sunday=random.choice([True, False])
+                saturday=True,
+                sunday=True
             )
             routes.append(route)
 

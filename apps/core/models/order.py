@@ -42,7 +42,7 @@ class Order(models.Model):
             "Tax Percentage": [self.tax_percentage]
         })
         
-    def update_optimize_route(self, optimized, routes, solved):
+    def update_optimize_route(self, optimized, routes, solved) -> None:
        optimized.routes = routes
        optimized.solved = solved
        optimized.save()
@@ -113,7 +113,6 @@ class OrderOptimized(models.Model):
             source = [location for location in locations if location.to_calculate == solutions[i+2]][0]
             destination = [location for location in locations if location.to_calculate == solutions[i+3]][0]
             route = Route.objects.filter(Q(source__pk=source.pk) & Q(destination__pk=destination.pk)).first()
-            
             routes.append(
                 {
                     "id": solutions[i],

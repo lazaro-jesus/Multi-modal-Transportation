@@ -6,13 +6,12 @@ from .models import Order, Route
 class OrderForm(forms.ModelForm):
     class Meta:
         model = Order
-        fields = ('ship_from', 'ship_to', 'commodity', 'value', 'volume', 'required_delivery_date', 'tax_percentage')
+        fields = ('ship_from', 'ship_to', 'commodity', 'value', 'required_delivery_date', 'tax_percentage')
         widgets = {
             'ship_from': forms.Select(attrs={'class': 'form-select'}),
             'ship_to': forms.Select(attrs={'class': 'form-select'}),
             'commodity': forms.TextInput(attrs={'class': 'form-control'}),
             'value': forms.NumberInput(attrs={'class': 'form-control'}),
-            'volume': forms.NumberInput(attrs={'class': 'form-control'}),
             'required_delivery_date': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
             'tax_percentage': forms.NumberInput(attrs={'class': 'form-control'}),
         }
@@ -29,25 +28,17 @@ class RouteForm(forms.ModelForm):
         fields = (
             'source',
             'destination',
-            'container_size',
             'carrier',
             'travel_mode',
-            'extra_cost',
-            'custom_clearance_time',
-            'handling_time',
-            'extra_time',
-            'transit_time'
+            'fixed_freight_cost',
+            'transit_time',
         )
         widgets = {
             'source': forms.Select(attrs={'class': 'form-select'}),
             'destination': forms.Select(attrs={'class': 'form-select'}),
-            'container_size': forms.NumberInput(attrs={'class': 'form-control'}),
             'carrier': forms.TextInput(attrs={'class': 'form-control'}),
             'travel_mode': forms.Select(attrs={'class': 'form-select'}),
-            'extra_cost': forms.NumberInput(attrs={'class': 'form-control'}),
-            'custom_clearance_time': forms.NumberInput(attrs={'class': 'form-control'}),
-            'handling_time': forms.NumberInput(attrs={'class': 'form-control'}),
-            'extra_time': forms.NumberInput(attrs={'class': 'form-control'}),
+            'fixed_freight_cost': forms.NumberInput(attrs={'class': 'form-control'}),
             'transit_time': forms.NumberInput(attrs={'class': 'form-control'}),
         }
 
