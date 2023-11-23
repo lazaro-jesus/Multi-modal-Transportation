@@ -38,11 +38,18 @@
             <form method="post" class="php-email-form">
               {% csrf_token %}
               <h3>Actualizar {{ model }}</h3>
-              <p>Vel nobis odio laboriosam et hic voluptatem. Inventore vitae totam. Rerum repellendus enim linead sero park flows.</p>
               <div class="row gy-4">
                 {% for field in form %}
                 <div class="col-md-12">
+                  <div class="mx-2 text-dark">{{ field.label_tag }}</div>
                     {{ field }}
+                    {% if field.errors %}
+                        <div class="invalid-feedback">
+                            {% for error in field.errors %}
+                                {{ error }}
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                 </div>
                 {% endfor %}
 
@@ -64,4 +71,7 @@
     </section><!-- End Get a Quote Section -->
 
   </main><!-- End #main -->
-  {% endblock content %}
+{% endblock content %}
+{% block javascript %}
+  <script src="{% static 'js/form.js' %}"></script>
+{% endblock javascript %}

@@ -65,13 +65,12 @@
                       {% endfor %}
                     </ul>
                   </div>
-                {% elif not order.optimized.solved %}
+                {% elif order.optimized %}
                   <div class="alert alert-danger mt-4" role="alert">
                     {{ order.optimized.routes }}
                   </div>
             {% endif %}
-            
-              
+
               </div>
             </div>
             <!-- End Pricing Item -->
@@ -82,6 +81,7 @@
     <!-- End Pricing Section -->
   </main>
   <!-- End #main -->
+
 {% endblock %}
 
 {% block javascript %}

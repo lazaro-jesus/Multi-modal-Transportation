@@ -41,7 +41,7 @@
               <div class="row gy-4 mt-3">
                 {% for field in form %}
                 <div class="col-md-12">
-                  <div class="mx-2 text-secondary">{{ field.label_tag }}</div>
+                  <div class="mx-2 text-dark">{{ field.label_tag }}</div>
                     {{ field }}
                     {% if field.errors %}
                         <div class="invalid-feedback">
@@ -72,3 +72,6 @@
 
   </main><!-- End #main -->
 {% endblock content %}
+{% block javascript %}
+  <script src="{% static 'js/form.js' %}"></script>
+{% endblock javascript %}

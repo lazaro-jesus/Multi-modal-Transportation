@@ -21,6 +21,7 @@ app_name = "core"
 
 urlpatterns = [
     path("", HomeView.as_view(), name="home"),
+    
     # Orders
     path("order-create/", OrderCreateView.as_view(), name="order-create"),
     path("order-list/", OrderListView.as_view(), name="order-list"),

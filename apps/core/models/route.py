@@ -5,13 +5,14 @@ from django.utils.functional import cached_property
 from .location import Location
 from .constants import TravelMode
 from ..managers import RouteManager
+from .validations import validate_letters
 
 
 class Route(models.Model):
     source = models.ForeignKey(Location, on_delete=models.CASCADE, related_name="source_routes", verbose_name="Lugar de origen")
     destination = models.ForeignKey(Location, on_delete=models.CASCADE, related_name="destination_routes", verbose_name="Lugar de destino")
     container_size = models.IntegerField(verbose_name="Tamaño del Contenedor", default=100)
-    carrier = models.CharField(max_length=255, verbose_name="Transportista")
+    carrier = models.CharField(max_length=255, verbose_name="Transportista", validators=[validate_letters])
     travel_mode = models.CharField(max_length=2, choices=TravelMode.choices, verbose_name="Modo de Viaje")
     fixed_freight_cost = models.IntegerField(verbose_name="Costo Fijo de Flete", default=0)
     handling_cost = models.IntegerField(verbose_name="Costo de Manejo de Puerto/Aeropuerto/Estación de Tren", default=0)

@@ -12,7 +12,7 @@
           <p data-aos="fade-up" data-aos-delay="100">Un proyecto sobre el uso de programación matemática para resolver la minimización de costos de transporte multimodal en la entrega de mercancías y la gestión de la cadena de suministro.</p>
 
           <form action="{% url "core:route-search" %}" method="get" class="form-search d-flex align-items-stretch mb-3" data-aos="fade-up" data-aos-delay="200">
-            <input type="text" class="form-control" name="query" placeholder="Provincia">
+            <input type="text" class="form-control" id="query" name="query" placeholder="Provincia">
             <button type="submit" class="btn btn-primary">Buscar</button>
           </form>
 
@@ -27,21 +27,21 @@
 
             <div class="col-lg-3 col-6">
               <div class="stats-item text-center w-100 h-100">
-                <span data-purecounter-start="0" data-purecounter-end="{{ routes_count }}" data-purecounter-duration="1" class="purecounter"></span>
+                <span data-purecounter-start="0" data-purecounter-end="{{ orders_count }}" data-purecounter-duration="1" class="purecounter"></span>
                 <p>Órdenes</p>
               </div>
             </div><!-- End Stats Item -->
 
             <div class="col-lg-3 col-6">
               <div class="stats-item text-center w-100 h-100">
-                <span data-purecounter-start="0" data-purecounter-end="{{ orders_count }}" data-purecounter-duration="1" class="purecounter"></span>
+                <span data-purecounter-start="0" data-purecounter-end="{{ processed_orders_count }}" data-purecounter-duration="1" class="purecounter"></span>
                 <p>Órdenes procesadas</p>
               </div>
             </div><!-- End Stats Item -->
 
             <div class="col-lg-3 col-6">
               <div class="stats-item text-center w-100 h-100">
-                <span data-purecounter-start="0" data-purecounter-end="{{ processed_orders_count }}" data-purecounter-duration="1" class="purecounter"></span>
+                <span data-purecounter-start="0" data-purecounter-end="{{ soved_orders_count }}" data-purecounter-duration="1" class="purecounter"></span>
                 <p>Órdenes solucionadas</p>
               </div>
             </div><!-- End Stats Item -->

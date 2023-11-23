@@ -169,8 +169,8 @@ class MMT:
         self.solution_ = {}
         self.arrTime_ = {}
         for i in range(self.goods):
-            self.solution_['goods-' + str(i + 1)] = list(filter(lambda x: x[3] == i, nonzeroX))
-            self.arrTime_['goods-' + str(i + 1)] = (self.minDate + pd.to_timedelta \
+            self.solution_[f'goods-{i + 1}'] = list(filter(lambda x: x[3] == i, nonzeroX))
+            self.arrTime_[f'goods-{i + 1}'] = (self.minDate + pd.to_timedelta \
                 (np.sum(arrTime[:, self.kEndPort[i], :, i]), unit='days')).date().isoformat()
 
     def get_output_(self):
@@ -196,11 +196,9 @@ class MMT:
         """Transform the cached results"""
         if self.arrTime_['goods-1'] == "NaT":
             raise NotSolvable()
-        
+
         solution = self.solution_["goods-1"]
-        routes = ""
-        
-        for i, s in enumerate(solution):
-            routes += f"{i+1};{s[2]};{s[0]};{s[1]};"
-            
+        routes = "".join(
+            f"{i + 1};{s[2]};{s[0]};{s[1]};" for i, s in enumerate(solution)
+        )
         return routes[:-1]

@@ -8,13 +8,13 @@ class OrderForm(forms.ModelForm):
         model = Order
         fields = ('ship_from', 'ship_to', 'commodity', 'value', 'volume', 'required_delivery_date', 'tax_percentage')
         widgets = {
-            'ship_from': forms.Select(attrs={'class': 'form-select', 'placeholder': 'Lugar de origen'}),
-            'ship_to': forms.Select(attrs={'class': 'form-select', 'placeholder': 'Lugar de destino'}),
-            'commodity': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Mercancía'}),
-            'value': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Valor'}),
-            'volume': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Volumen'}),
-            'required_delivery_date': forms.DateInput(attrs={'type': 'date', 'class': 'form-control', 'placeholder': 'Fecha de entrega requerida'}),
-            'tax_percentage': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Porcentaje de impuesto'}),
+            'ship_from': forms.Select(attrs={'class': 'form-select'}),
+            'ship_to': forms.Select(attrs={'class': 'form-select'}),
+            'commodity': forms.TextInput(attrs={'class': 'form-control'}),
+            'value': forms.NumberInput(attrs={'class': 'form-control'}),
+            'volume': forms.NumberInput(attrs={'class': 'form-control'}),
+            'required_delivery_date': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+            'tax_percentage': forms.NumberInput(attrs={'class': 'form-control'}),
         }
         
     def __init__(self, *args, **kwargs):
@@ -24,29 +24,34 @@ class OrderForm(forms.ModelForm):
 
 
 class RouteForm(forms.ModelForm):
-   class Meta:
-       model = Route
-       fields = [
-           'source',
-           'destination',
-           'container_size',
-           'carrier',
-           'travel_mode',
-           'extra_cost',
-           'custom_clearance_time',
-           'handling_time',
-           'extra_time',
-           'transit_time',
-       ]
-       widgets = {
-           'source': forms.Select(attrs={'class': 'form-select', 'placeholder': 'Lugar de origen'}),
-           'destination': forms.Select(attrs={'class': 'form-select', 'placeholder': 'Lugar de destino'}),
-           'container_size': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Tamaño del Contenedor'}),
-           'carrier': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Transportista'}),
-           'travel_mode': forms.Select(attrs={'class': 'form-select', 'placeholder': 'Modo de Viaje'}),
-           'extra_cost': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Costo Extra'}),
-           'custom_clearance_time': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Tiempo de Despacho Aduanero'}),
-           'handling_time': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Tiempo de Manejo de Puerto/Aeropuerto/Estación de Tren'}),
-           'extra_time': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Tiempo Extra'}),
-           'transit_time': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Tiempo de Tránsito'}),
-       }
+    class Meta:
+        model = Route
+        fields = (
+            'source',
+            'destination',
+            'container_size',
+            'carrier',
+            'travel_mode',
+            'extra_cost',
+            'custom_clearance_time',
+            'handling_time',
+            'extra_time',
+            'transit_time'
+        )
+        widgets = {
+            'source': forms.Select(attrs={'class': 'form-select'}),
+            'destination': forms.Select(attrs={'class': 'form-select'}),
+            'container_size': forms.NumberInput(attrs={'class': 'form-control'}),
+            'carrier': forms.TextInput(attrs={'class': 'form-control'}),
+            'travel_mode': forms.Select(attrs={'class': 'form-select'}),
+            'extra_cost': forms.NumberInput(attrs={'class': 'form-control'}),
+            'custom_clearance_time': forms.NumberInput(attrs={'class': 'form-control'}),
+            'handling_time': forms.NumberInput(attrs={'class': 'form-control'}),
+            'extra_time': forms.NumberInput(attrs={'class': 'form-control'}),
+            'transit_time': forms.NumberInput(attrs={'class': 'form-control'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['source'].empty_label = "Seleccione el origen"
+        self.fields['destination'].empty_label = "Seleccione el destino"
