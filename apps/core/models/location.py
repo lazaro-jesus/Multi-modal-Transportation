@@ -18,5 +18,5 @@ class Location(models.Model):
     
     @cached_property
     def to_calculate(self) -> str:
-        return f"{self.province} {self.port_type}"
+        return f"{self.get_province_display()} {self.get_port_type_display()}"
     
