@@ -39,10 +39,10 @@ class Route(models.Model):
     class Meta:
         verbose_name = "Ruta"
         unique_together = ['source', 'destination']
-        ordering = ["source"]
+        ordering = ["source", "destination"]
         
     def __str__(self) -> str:
-        return f"{self.source} --> {self.destination} - {self.warehouse_cost}"
+        return f"{self.pk-1} {self.source} --> {self.destination}"
     
     @cached_property
     def to_dataframe(self) -> pd.DataFrame:

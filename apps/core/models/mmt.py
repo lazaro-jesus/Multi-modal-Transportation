@@ -194,7 +194,7 @@ class MMT:
  
     def solution_text(self, order: pd.DataFrame) -> str:
         """Transform the cached results"""
-        if self.arrTime_['goods-1'] == "NaT":
+        if self.arrTime_ is None or self.arrTime_['goods-1'] == "NaT":
             raise NotSolvable()
 
         solution = self.solution_["goods-1"]

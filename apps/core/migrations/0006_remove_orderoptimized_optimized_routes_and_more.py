@@ -22,7 +22,7 @@ class Migration(migrations.Migration):
                 on_delete=django.db.models.deletion.CASCADE,
                 related_name="optimized",
                 to="core.order",
-                verbose_name="Órden",
+                verbose_name="Orden",
             ),
         ),
         migrations.DeleteModel(

@@ -6,7 +6,7 @@ from django.db import models
 
 class RouteManager(models.Manager):
     def routes_dataframe(self) -> pd.DataFrame:
-        models = self.all()
+        models = self.all().order_by('source', 'destination')
         routes = [route.to_dataframe for route in models]
         routes = pd.concat(routes, ignore_index=True)
         routes["Cost"] = routes[routes.columns[7:12]].sum(axis=1)

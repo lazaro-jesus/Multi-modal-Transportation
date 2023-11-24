@@ -1,5 +1,5 @@
 from django.views.generic import CreateView, ListView, UpdateView, View
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from django.urls import reverse_lazy
 from django.db.models import Q
 
@@ -66,7 +66,8 @@ class RouteUpdateView(UpdateView):
     success_url = reverse_lazy('core:route-list')
     
     def get_object(self, queryset=None):
-        return Route.objects.get(pk=self.kwargs['pk'])
+        route = get_object_or_404(Route, pk=self.kwargs['pk'])
+        return route
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)

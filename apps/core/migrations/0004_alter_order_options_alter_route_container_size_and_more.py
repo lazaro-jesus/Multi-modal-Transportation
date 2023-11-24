@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AlterModelOptions(
             name="order",
-            options={"verbose_name": "Órden", "verbose_name_plural": "Órdenes"},
+            options={"verbose_name": "Orden", "verbose_name_plural": "Órdenes"},
         ),
         migrations.AlterField(
             model_name="route",
@@ -87,7 +87,7 @@ class Migration(migrations.Migration):
                         on_delete=django.db.models.deletion.CASCADE,
                         related_name="optimizeds",
                         to="core.order",
-                        verbose_name="Órden",
+                        verbose_name="Orden",
                     ),
                 ),
             ],

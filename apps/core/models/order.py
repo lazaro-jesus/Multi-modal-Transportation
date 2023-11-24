@@ -22,7 +22,7 @@ class Order(models.Model):
     tax_percentage = models.FloatField(verbose_name="Porcentaje de impuesto", default=0)
     
     class Meta:
-        verbose_name = "Órden"
+        verbose_name = "Orden"
         verbose_name_plural = "Órdenes"
 
     def __str__(self) -> str:
@@ -91,7 +91,7 @@ class Order(models.Model):
 
         
 class OrderOptimized(models.Model):
-    order = models.OneToOneField(Order, on_delete=models.CASCADE, verbose_name="Órden", related_name="optimized")
+    order = models.OneToOneField(Order, on_delete=models.CASCADE, verbose_name="Orden", related_name="optimized")
     routes = models.TextField(verbose_name="Rutas Optimizadas")
     solved = models.BooleanField(default=True, verbose_name="Solucionado")
 
@@ -102,7 +102,7 @@ class OrderOptimized(models.Model):
         icons = {
             "AI": "bi bi-airplane-fill text-info",
             "RA": "bi bi-train-front-fill text-danger",
-            "TR": "bi bi-truck text-warning",
+            "TR": "bi bi-truck text-success",
             "SE": "bi bi-water text-primary"
         }
         solutions = self.routes.split(";")
@@ -119,7 +119,10 @@ class OrderOptimized(models.Model):
                     "date": solutions[i+1],
                     "origin": solutions[i+2],
                     "destination": solutions[i+3],
-                    "icon": icons[route.travel_mode]
+                    "icon": icons.get(
+                        route.travel_mode if route else None, 
+                        "bi bi-question text-warning"
+                    )
                 }
             )
 
