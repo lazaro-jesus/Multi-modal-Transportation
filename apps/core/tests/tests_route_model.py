@@ -7,7 +7,6 @@ from apps.core.models.constants import TravelMode, Province, PortType
 class RouteModelTest(TestCase):
     @classmethod
     def setUpTestData(cls):
-        # Set up non-modified objects used by all test methods
         source = Location.objects.create(province=Province.LA_HABANA, port_type=PortType.AIRPORT)
         destination = Location.objects.create(province=Province.PINAR_DEL_RIO, port_type=PortType.PORT)
         Route.objects.create(source=source, destination=destination, travel_mode=TravelMode.AIR, transit_time=48)
@@ -29,5 +28,5 @@ class RouteModelTest(TestCase):
 
     def test_object_name_is_source_destination(self):
         route = Route.objects.get(id=1)
-        expected_object_name = f"{route.source} --> {route.destination} - {route.warehouse_cost}"
+        expected_object_name = f"{route.source} --> {route.destination}"
         self.assertEqual(expected_object_name, str(route))

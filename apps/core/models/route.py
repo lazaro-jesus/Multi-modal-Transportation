@@ -42,7 +42,7 @@ class Route(models.Model):
         ordering = ["source", "destination"]
         
     def __str__(self) -> str:
-        return f"{self.pk-1} {self.source} --> {self.destination}"
+        return f"{self.source} --> {self.destination}"
     
     @cached_property
     def to_dataframe(self) -> pd.DataFrame:
